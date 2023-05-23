@@ -93,7 +93,7 @@ stages:
     
         openshiftService: 'openshift-servicecon'
     
-        cmd: 'oc login --token=sha256~yFvdvdA9HHbtDgjPwV3ka8yzDnxRwXWqAlEbuvPEgZU --server=https://api.sandbox-m2.ll9k.p1.openshiftapps.com:6443'
+        cmd: 'oc login --token=sha256~kFkF2sz5qBFSuAJz7PQ8HvxIj_yA9JpKk88Z2DXYK4w --server=https://api.sandbox-m2.ll9k.p1.openshiftapps.com:6443'
     
     - task: CmdLine@2
     
