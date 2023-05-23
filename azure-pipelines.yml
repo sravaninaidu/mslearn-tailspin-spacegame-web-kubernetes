@@ -91,7 +91,7 @@ stages:
     
         connectionType: 'OpenShift Connection Service'
     
-        openshiftService: 'openshift-3'
+        openshiftService: 'openshift-servicecon'
     
         cmd: 'oc login --token=sha256~yFvdvdA9HHbtDgjPwV3ka8yzDnxRwXWqAlEbuvPEgZU --server=https://api.sandbox-m2.ll9k.p1.openshiftapps.com:6443'
     
