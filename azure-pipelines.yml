@@ -24,7 +24,7 @@ stages:
         buildContext: $(Build.Repository.LocalPath)
         repository: $(webRepository)
         dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/Dockerfile'
-        containerRegistry: 'openshift_microservice'
+        containerRegistry: 'openshift_container'
         tags: |
           $(tag)
     - task: Docker@2
@@ -34,7 +34,7 @@ stages:
         buildContext: $(Build.Repository.LocalPath)
         repository: $(leaderboardRepository)
         dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.LeaderboardContainer/Dockerfile'
-        containerRegistry: 'openshift_microservice'
+        containerRegistry: 'openshift_container'
         tags: |
           $(tag)
     - publish: '$(Build.SourcesDirectory)/manifests'
@@ -48,7 +48,7 @@ stages:
     displayName: Deploy
     pool:
       vmImage: 'ubuntu-18.04'
-    environment: 'openshift-sandbox.default'
+    
     variables:
     - group: Release
     strategy:
@@ -62,14 +62,14 @@ stages:
             inputs:
               action: createSecret
               secretName: $(imagePullSecret)
-              dockerRegistryEndpoint: 'openshift_microservice'
-              kubernetesServiceConnection: 'kubernetesServiceConnection'
+              dockerRegistryEndpoint: 'openshift_container'
+              kubernetesServiceConnection: 'openshift_demo'
               namespace: 'default'            
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
             inputs:
               action: deploy
-              kubernetesServiceConnection: 'kubernetesServiceConnection'
+              kubernetesServiceConnection: 'openshift_demo'
               namespace: 'default'
               manifests: |
                 $(Pipeline.Workspace)/manifests/deployment.yml
