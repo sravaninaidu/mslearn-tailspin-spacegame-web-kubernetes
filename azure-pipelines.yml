@@ -46,7 +46,8 @@ stages:
   - deployment: Deploy
     displayName: Deploy
     pool:
-      vmImage: 'ubuntu-latest'
+      vmImage: 'ubuntu-18.04'
+    
     variables:
     - group: Release
     strategy:
@@ -77,7 +78,5 @@ stages:
               containers: |
                 $(RegistryName)/$(webRepository):$(tag)
                 $(RegistryName)/$(leaderboardRepository):$(tag)
-
-
 
 
