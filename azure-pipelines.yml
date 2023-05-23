@@ -39,4 +39,45 @@ stages:
           $(tag)
     - publish: '$(Build.SourcesDirectory)/manifests'
       artifact: manifests
+- stage: 'Deploy'
+  displayName: 'Deploy the containers'
+  dependsOn: Build
+  jobs:
+  - deployment: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: 'ubuntu-latest'
+    variables:
+    - group: Release
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - download: current
+            artifact: manifests
+          - task: KubernetesManifest@0
+            displayName: Create imagePullSecret
+            inputs:
+              action: createSecret
+              secretName: $(imagePullSecret)
+              dockerRegistryEndpoint: 'openshift_container'
+              kubernetesServiceConnection: 'openshift_demo'
+              namespace: 'default'            
+          - task: KubernetesManifest@0
+            displayName: Deploy to Kubernetes cluster
+            inputs:
+              action: deploy
+              kubernetesServiceConnection: 'openshift_demo'
+              namespace: 'default'
+              manifests: |
+                $(Pipeline.Workspace)/manifests/deployment.yml
+                $(Pipeline.Workspace)/manifests/service.yml
+              imagePullSecrets: |
+                $(imagePullSecret)
+              containers: |
+                $(RegistryName)/$(webRepository):$(tag)
+                $(RegistryName)/$(leaderboardRepository):$(tag)
+
+
+
 
