@@ -46,8 +46,8 @@ stages:
   - deployment: Deploy
     displayName: Deploy
     pool:
-      vmImage: 'ubuntu-18.04'
-    
+      vmImage: 'ubuntu-latest'
+    environment: 'openshift_demo.sravani-g-dev'
     variables:
     - group: Release
     strategy:
@@ -62,14 +62,14 @@ stages:
               action: createSecret
               secretName: $(imagePullSecret)
               dockerRegistryEndpoint: 'openshift_container'
-              kubernetesServiceConnection: 'openshift_demo'
-              namespace: 'default'            
+              kubernetesServiceConnection: 'openshift_demo-sravani-g-dev-1684825725553'
+              namespace: 'sravani-g-dev'            
           - task: KubernetesManifest@0
             displayName: Deploy to Kubernetes cluster
             inputs:
               action: deploy
-              kubernetesServiceConnection: 'openshift_demo'
-              namespace: 'default'
+              kubernetesServiceConnection: 'openshift_demo-sravani-g-dev-1684825725553'
+              namespace: 'sravani-g-dev'
               manifests: |
                 $(Pipeline.Workspace)/manifests/deployment.yml
                 $(Pipeline.Workspace)/manifests/service.yml
