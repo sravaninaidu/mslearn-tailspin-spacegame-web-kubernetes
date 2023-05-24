@@ -51,6 +51,7 @@ stages:
         targetType: 'inline'
         script: |
           docker build -t $(Build.SourcesDirectory)/Tailspin.SpaceGame.LeaderboardContainer/Dockerfile
+          docker image ls
           docker login -u sravaninaidu9 -p shannu@123
           docker push sravaninaidu9/leaderboard:latest
 
