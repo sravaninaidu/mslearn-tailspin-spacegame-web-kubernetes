@@ -33,4 +33,5 @@ stages:
         command: push
         containerRegistry: openservice_docker
         repository: sravaninaidu9
+
         tags: latest
