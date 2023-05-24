@@ -28,7 +28,7 @@ stages:
         tags: |
           $(tag)
     - task: Docker@3
-      displayName: Push 
+      displayName: Push image
       inputs:
         command: push
         containerRegistry: openservice_docker
