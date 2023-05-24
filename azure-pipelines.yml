@@ -80,10 +80,3 @@ stages:
           kubectl apply -f deployment.yml
           ls
 
-- task: Docker@2
-  inputs:
-    containerRegistry: 'openshift_servicedock'
-    repository: 'web'
-    command: 'buildAndPush'
-    Dockerfile: '**/Dockerfile'
-    buildContext: '$(Build.Repository.LocalPath)'
