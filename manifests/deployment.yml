@@ -16,7 +16,7 @@ spec:
         - name: acr-pull-secret
       containers:
         - name: web
-          image: tailspinspacegame11760.azurecr.io/web
+          image: openshiftacr.azurecr.io/web
           ports:
           - containerPort: 80
 ---
@@ -38,6 +38,6 @@ spec:
         - name: acr-pull-secret
       containers:
         - name: leaderboard
-          image: tailspinspacegame11760.azurecr.io/leaderboard
+          image: openshiftacr.azurecr.io/leaderboard
           ports:
           - containerPort: 80
