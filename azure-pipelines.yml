@@ -38,7 +38,7 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'openshift_servicedock'
-        repository: 'web'
+        repository: 'leaderboard'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/Dockerfile'
         buildContext: '$(Build.Repository.LocalPath)'
@@ -46,7 +46,7 @@ stages:
     - task: Docker@2
       inputs:
         containerRegistry: 'openshift_servicedock'
-        repository: 'leaderboard'
+        repository: 'web'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.LeaderboardContainer/Dockerfile'
         buildContext: '$(Build.Repository.LocalPath)'
