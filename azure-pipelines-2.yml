@@ -30,6 +30,7 @@ stages:
     - task: Docker@3
       displayName: Push 
       inputs:
+        command: build
         containerRegistry: openservice_docker
         repository: sravaninaidu9
         command: push
