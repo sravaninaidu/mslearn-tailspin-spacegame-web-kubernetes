@@ -28,9 +28,9 @@ stages:
         tags: |
           $(tag)
     - task: Docker@3
-  displayName: Push 
-  inputs:
-    containerRegistry: openservice_docker
-    repository: sravaninaidu9
-    command: push
-    tags: latest
+      displayName: Push 
+      inputs:
+      containerRegistry: openservice_docker
+      repository: sravaninaidu9
+      command: push
+      tags: latest
