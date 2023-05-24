@@ -43,7 +43,7 @@ stages:
       inputs:
         script: |
           ls
-          cd Tailspin.SpaceGame.web
+          cd Tailspin.SpaceGame.Web
           ls  
           docker image build -t sravaninaidu9/web:latest .
           docker image ls
