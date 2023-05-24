@@ -49,7 +49,7 @@ stages:
 
         dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/Dockerfile'
 
-        containerRegistry: 'openshift_container'
+        containerRegistry: 'openshift_servicedock'
 
         tags: |
 
@@ -69,7 +69,7 @@ stages:
 
         dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.LeaderboardContainer/Dockerfile'
 
-        containerRegistry: 'openshift_container'
+        containerRegistry: 'openshift_servicedock'
 
         tags: |
 
