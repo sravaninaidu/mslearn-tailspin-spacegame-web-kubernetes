@@ -41,6 +41,7 @@ stages:
         repository: 'web'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/Dockerfile'
+        buildContext: '$(Build.Repository.LocalPath)'
 
     - task: Docker@2
       inputs:
@@ -48,6 +49,7 @@ stages:
         repository: 'leaderboard'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.LeaderboardContainer/Dockerfile'
+        buildContext: '$(Build.Repository.LocalPath)'
 
     - publish: '$(Build.SourcesDirectory)/manifests'
 
@@ -78,3 +80,10 @@ stages:
           kubectl apply -f deployment.yml
           ls
 
+- task: Docker@2
+  inputs:
+    containerRegistry: 'openshift_servicedock'
+    repository: 'web'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile'
+    buildContext: '$(Build.Repository.LocalPath)'
