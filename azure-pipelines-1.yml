@@ -42,6 +42,7 @@ stages:
     - task: CmdLine@2
       inputs:
         script: |
+          cd Tailspin.SpaceGame.Web
           ls  
           docker build -t .
           docker image ls
