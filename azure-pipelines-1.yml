@@ -39,29 +39,21 @@ stages:
 
     steps:
 
-    - task: Docker@2
-
-      displayName: 'Build and push the image to container registry'
-
+    - task: PowerShell@2
       inputs:
-        containerRegistry: 'openshift_docker'
-        repository: 'web'
-        command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/Dockerfile'
-        buildContext: '$(Build.Repository.LocalPath)'
-        tags: '$(tag)'
+        targetType: 'inline'
+        script: |
+          docker build -t $(Build.SourcesDirectory)/Tailspin.SpaceGame.web/Dockerfile
+          docker login -u sravaninaidu9 -p shannu@123
+          docker push sravaninaidu9/leaderboard:latest
 
-    - task: Docker@2
-
-      displayName: 'Build and push the leaderboard image to container registry'
-
+    - task: PowerShell@2
       inputs:
-        containerRegistry: 'openshift_docker'
-        repository: 'leaderboard'
-        command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.LeaderboardContainer/Dockerfile'
-        buildContext: '$(Build.Repository.LocalPath)'
-        tags: '$(tag)'
+        targetType: 'inline'
+        script: |
+          docker build -t $(Build.SourcesDirectory)/Tailspin.SpaceGame.LeaderboardContainer/Dockerfile
+          docker login -u sravaninaidu9 -p shannu@123
+          docker push sravaninaidu9/leaderboard:latest
 
     - task: CmdLine@2
 
@@ -84,6 +76,5 @@ stages:
     
         script: |
           cd mslearn-tailspin-spacegame-web-kubernetes/manifests
-          kubectl create -f deployment.yml
+          kubectl apply -f deployment.yml
           ls
-    
