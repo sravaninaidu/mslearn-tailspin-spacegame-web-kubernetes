@@ -36,24 +36,11 @@ stages:
     steps:
 
     - task: Docker@2
-
-      displayName: 'Build and push the image to container registry'
-
       inputs:
-
-        command: buildAndPush
-
-        buildContext: $(Build.Repository.LocalPath)
-
-        repository: $(webRepository)
-
-        dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/Dockerfile'
-
         containerRegistry: 'openshift_servicedock'
-
-        tags: |
-
-          $(tag)
+        repository: 'web'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/Dockerfile'
 
     - task: Docker@2
       inputs:
