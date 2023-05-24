@@ -1,0 +1,108 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+
+- 'master'
+
+variables:
+
+  buildConfiguration: 'Release'
+
+  leaderboardRepository: 'leaderboard'
+
+  webRepository: 'web'
+
+  tag: '$(Build.BuildId)'
+
+  imagePullSecret: 'secret'
+
+
+
+
+stages:
+
+- stage: 'Build'
+
+  displayName: 'Build and push'
+
+  jobs: 
+
+  - job: 'Build'
+
+    displayName: 'Build job'
+
+    pool:
+
+     vmImage: 'ubuntu-latest'
+
+    steps:
+
+    - task: Docker@2
+
+      displayName: 'Build and push the image to container registry'
+
+      inputs:
+
+        command: buildAndPush
+
+        buildContext: $(Build.Repository.LocalPath)
+
+        repository: $(webRepository)
+
+        dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/Dockerfile'
+
+        containerRegistry: 'openshift_servicedock'
+
+        tags: |
+
+          $(tag)
+
+    - task: Docker@2
+
+      displayName: 'Build and push the leaderboard image to container registry'
+
+      inputs:
+
+        command: buildAndPush
+
+        buildContext: $(Build.Repository.LocalPath)
+
+        repository: $(leaderboardRepository)
+
+        dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.LeaderboardContainer/Dockerfile'
+
+        containerRegistry: 'openshift_servicedock'
+
+        tags: |
+
+         $(tag)
+
+    - publish: '$(Build.SourcesDirectory)/manifests'
+
+      artifact: manifests
+
+    - task: CmdLine@2
+
+      inputs:
+    
+        script: 'git clone https://github.com/iam-aravind/mslearn-tailspin-spacegame-web-kubernetes.git'
+
+    - task: oc-cmd@3
+
+      inputs:
+    
+        connectionType: 'OpenShift Connection Service'
+    
+        openshiftService: 'openshift-3'
+    
+        cmd: 'oc login --token=oc login --token=sha256~kFkF2sz5qBFSuAJz7PQ8HvxIj_yA9JpKk88Z2DXYK4w --server=https://api.sandbox-m2.ll9k.p1.openshiftapps.com:6443'
+    - task: CmdLine@2
+    
+      inputs:
+    
+        script: |
+          cd mslearn-tailspin-spacegame-web-kubernetes/manifests
+          kubectl create -f deployment.yml
+          ls
