@@ -6,6 +6,9 @@ trigger:
 
 - 'master'
 
+resources:
+- repo: self
+
 variables:
 
   buildConfiguration: 'Release'
