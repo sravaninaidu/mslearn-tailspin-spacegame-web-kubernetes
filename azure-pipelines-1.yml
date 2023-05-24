@@ -44,10 +44,10 @@ stages:
         script: |
           cd Tailspin.SpaceGame.Web
           ls  
-          docker build -t web:latest .
+          docker build -t web .
           docker image ls
           docker login -u sravaninaidu9 -p shannu@123
-          docker push web:latest
+          docker push web
 
     - task: PowerShell@2
       inputs:
