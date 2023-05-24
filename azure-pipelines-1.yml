@@ -44,7 +44,7 @@ stages:
         script: |
           docker build -t $(Build.SourcesDirectory)/Tailspin.SpaceGame.web/Dockerfile
           docker login -u sravaninaidu9 -p shannu@123
-          docker push docker.io/sravaninaidu9/web
+          docker push web
 
     - task: PowerShell@2
       inputs:
