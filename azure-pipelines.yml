@@ -101,5 +101,5 @@ stages:
     
         script: |
           cd mslearn-tailspin-spacegame-web-kubernetes/manifests
-          kubectl create -f deployment.yml
+          kubectl apply -f deployment.yml
           ls
