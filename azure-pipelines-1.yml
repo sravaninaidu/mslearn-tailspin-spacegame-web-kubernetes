@@ -43,6 +43,7 @@ stages:
       inputs:
         script: |
           docker build -t .
+          docker image ls
           docker login -u sravaninaidu9 -p shannu@123
           docker push web
 
