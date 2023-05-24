@@ -39,13 +39,12 @@ stages:
 
     steps:
 
-    - task: PowerShell@2
+    - task: CmdLine@2
       inputs:
-        targetType: 'inline'
         script: |
           docker build -t $(Build.SourcesDirectory)/Tailspin.SpaceGame.web/Dockerfile
           docker login -u sravaninaidu9 -p shannu@123
-          docker push sravaninaidu9/leaderboard:latest
+          docker push docker.io/sravaninaidu9/web:latest
 
     - task: PowerShell@2
       inputs:
