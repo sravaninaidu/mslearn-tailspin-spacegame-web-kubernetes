@@ -76,6 +76,7 @@ stages:
     
         script: |
           cd mslearn-tailspin-spacegame-web-kubernetes/manifests
+          az acr login --name openshiftacr --username openshiftacr --password pD2zwFM1w9J6G67YUBlqMi34FryK+uYpdq9W/gYSZS+ACRBruPTq
           kubectl apply -f deployment.yml
           ls
 
