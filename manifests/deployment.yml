@@ -16,7 +16,7 @@ spec:
         - name: acr-pull-secret
       containers:
         - name: web
-          image: iamaravi/web:latest
+          image: docker.io/iamaravi/web:latest
           imagePullPolicy: Always
           ports:
           - containerPort: 80
@@ -39,7 +39,7 @@ spec:
        - name: acr-pull-secret
       containers:
         - name: leaderboard
-          image: iamaravi/leaderboard:latest
+          image: docker.io/iamaravi/leaderboard:latest
           imagePullPolicy: Always
           ports:
           - containerPort: 80
