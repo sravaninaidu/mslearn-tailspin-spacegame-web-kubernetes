@@ -16,7 +16,7 @@ spec:
         - name: web
           image: docker.io/iamaravi/web:latest
           ports:
-          - containerPort: 80
+          - containerPort: 8080
 ---
 apiVersion : apps/v1
 kind: Deployment
@@ -36,4 +36,4 @@ spec:
         - name: leaderboard
           image: docker.io/iamaravi/leaderboard:latest
           ports:
-          - containerPort: 80
+          - containerPort: 8080
