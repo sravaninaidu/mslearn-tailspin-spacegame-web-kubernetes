@@ -12,12 +12,9 @@ spec:
       labels:
         app: web
     spec: 
-      imagePullSecrets:
-        - name: acr-pull-secret
       containers:
         - name: web
           image: docker.io/iamaravi/web:latest
-          imagePullPolicy: Always
           ports:
           - containerPort: 80
 ---
@@ -35,11 +32,8 @@ spec:
       labels:
         app: leaderboard
     spec:
-      imagePullSecrets:
-       - name: acr-pull-secret
       containers:
         - name: leaderboard
           image: docker.io/iamaravi/leaderboard:latest
-          imagePullPolicy: Always
           ports:
           - containerPort: 80
