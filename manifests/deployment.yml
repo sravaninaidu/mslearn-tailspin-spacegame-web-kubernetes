@@ -17,6 +17,7 @@ spec:
       containers:
         - name: web
           image: openshiftacr.azurecr.io/web
+          imagePullPolicy: Always
           ports:
           - containerPort: 80
 ---
@@ -39,5 +40,6 @@ spec:
       containers:
         - name: leaderboard
           image: openshiftacr.azurecr.io/leaderboard
+          imagePullPolicy: Always
           ports:
           - containerPort: 80
