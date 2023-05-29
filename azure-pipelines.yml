@@ -26,19 +26,21 @@ stages:
 
     - task: Docker@2
       inputs:
-        containerRegistry: 'openshift-ACR'
-        repository: 'web'
+        containerRegistry: 'test-docker'
+        repository: 'iamaravi/web'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/Dockerfile'
         buildContext: '$(Build.Repository.LocalPath)'
+        tags: 'latest'
 
     - task: Docker@2
       inputs:
-        containerRegistry: 'openshift-ACR'
-        repository: 'Leaderboard'
+        containerRegistry: 'test-docker'
+        repository: 'iamaravi/Leaderboard'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.LeaderboardContainer/Dockerfile'
         buildContext: '$(Build.Repository.LocalPath)'
+        tags: 'latest'
 
     - publish: '$(Build.SourcesDirectory)/manifests'
 
@@ -65,8 +67,6 @@ stages:
     
         script: |
           cd mslearn-tailspin-spacegame-web-kubernetes/manifests
-          az acr login --name openshiftacr --username openshiftacr --password pD2zwFM1w9J6G67YUBlqMi34FryK+uYpdq9W/gYSZS+ACRBruPTq
           kubectl apply -f deployment.yml
           kubectl apply -f service.yml
-          ls
 
