@@ -46,27 +46,4 @@ stages:
 
       artifact: manifests
 
-    - task: CmdLine@2
-
-      inputs:
-    
-        script: 'git clone https://github.com/sravaninaidu/mslearn-tailspin-spacegame-web-kubernetes.git'
-    - task: oc-cmd@3
-
-      inputs:
-    
-        connectionType: 'OpenShift Connection Service'
-    
-        openshiftService: 'openshift-servicecon'
-    
-        cmd: 'oc login --token=sha256~wMukKvWZG95PjBbP2Y3iBMGHUCIlO1sC_KG4kqTIStU --server=https://api.sandbox-m2.ll9k.p1.openshiftapps.com:6443'
-    
-    - task: CmdLine@2
-    
-      inputs:
-    
-        script: |
-          cd mslearn-tailspin-spacegame-web-kubernetes/manifests
-          kubectl apply -f deployment.yml
-          kubectl apply -f service.yml
-
+   
