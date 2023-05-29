@@ -1,25 +1,7 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
-
 trigger:
 
 - 'master'
 
-resources:
-- repo: self
-
-variables:
-
-  buildConfiguration: 'Release'
-
-  leaderboardRepository: 'leaderboard'
-
-  webRepository: 'web'
-
-  tag: '$(Build.BuildId)'
-
-  imagePullSecret: 'secret'
 
 
 
@@ -42,47 +24,23 @@ stages:
 
     steps:
 
-    - task: CmdLine@2
+    - task: Docker@2
       inputs:
-        script: |
-          ls
-          cd Tailspin.SpaceGame.Web
-          ls  
-          docker image build -t sravaninaidu9/web:latest .
-          docker image ls
-          docker login -u sravaninaidu9 -p shannu@123
-          docker image ls
-          docker push sravaninaidu9/web:latest
+        containerRegistry: 'test-docker'
+        repository: 'web'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.Web/Dockerfile'
+        buildContext: '$(Build.Repository.LocalPath)'
 
-    - task: PowerShell@2
+    - task: Docker@2
       inputs:
-        targetType: 'inline'
-        script: |
-          docker build -t $(Build.SourcesDirectory)/Tailspin.SpaceGame.LeaderboardContainer/Dockerfile
-          docker image ls
-          docker login -u sravaninaidu9 -p shannu@123
-          docker push sravaninaidu9/leaderboard:latest
+        containerRegistry: 'test-docker'
+        repository: 'Leaderboard'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/Tailspin.SpaceGame.LeaderboardContainer/Dockerfile'
+        buildContext: '$(Build.Repository.LocalPath)'
 
-    - task: CmdLine@2
+    - publish: '$(Build.SourcesDirectory)/manifests'
 
-      inputs:
-    
-        script: 'git clone https://github.com/iam-aravind/mslearn-tailspin-spacegame-web-kubernetes.git'
+      artifact: manifests
 
-    - task: oc-cmd@3
-
-      inputs:
-    
-        connectionType: 'OpenShift Connection Service'
-    
-        openshiftService: 'openshift-servicecon'
-    
-        cmd: 'oc login --token=oc login --token=sha256~kFkF2sz5qBFSuAJz7PQ8HvxIj_yA9JpKk88Z2DXYK4w --server=https://api.sandbox-m2.ll9k.p1.openshiftapps.com:6443'
-    - task: CmdLine@2
-    
-      inputs:
-    
-        script: |
-          cd mslearn-tailspin-spacegame-web-kubernetes/manifests
-          kubectl apply -f deployment.yml
-          ls
