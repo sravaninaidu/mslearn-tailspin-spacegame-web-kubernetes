@@ -32,6 +32,8 @@ spec:
       labels:
         app: leaderboard
     spec:
+      imagePullSecrets:
+        - name: dockerhub-secret
       containers:
         - name: leaderboard
           image: docker.io/iamaravi/leaderboard:latest
